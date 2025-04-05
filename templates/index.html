@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+
+{% block title %}API Request Tester{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Request Section -->
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Request</h5>
+                <div>
+                    <button id="send-request" class="btn btn-primary">
+                        <i class="fas fa-paper-plane me-1"></i> Send
+                    </button>
+                    <button id="clear-form" class="btn btn-secondary ms-2">
+                        <i class="fas fa-trash me-1"></i> Clear
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Request Form -->
+                <form id="request-form">
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <select id="request-method" class="form-select flex-grow-0" style="width: auto;">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="HEAD">HEAD</option>
+                            </select>
+                            <input type="url" class="form-control" id="request-url" placeholder="https://api.example.com/endpoint" required>
+                        </div>
+                    </div>
+
+                    <!-- Request Tabs -->
+                    <ul class="nav nav-tabs" id="requestTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="headers-tab" data-bs-toggle="tab" data-bs-target="#headers-content" type="button" role="tab" aria-controls="headers-content" aria-selected="true">Headers</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="body-tab" data-bs-toggle="tab" data-bs-target="#body-content" type="button" role="tab" aria-controls="body-content" aria-selected="false">Body</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content p-3 border border-top-0 rounded-bottom mb-3" id="requestTabsContent">
+                        <!-- Headers Tab -->
+                        <div class="tab-pane fade show active" id="headers-content" role="tabpanel" aria-labelledby="headers-tab">
+                            <div id="headers-container">
+                                <!-- Header rows will be added here -->
+                                <div class="header-row input-group mb-2">
+                                    <input type="text" class="form-control header-key" placeholder="Header name">
+                                    <input type="text" class="form-control header-value" placeholder="Header value">
+                                    <button type="button" class="btn btn-outline-danger remove-header">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" id="add-header" class="btn btn-sm btn-outline-secondary mt-2">
+                                <i class="fas fa-plus me-1"></i> Add Header
+                            </button>
+                        </div>
+
+                        <!-- Body Tab -->
+                        <div class="tab-pane fade" id="body-content" role="tabpanel" aria-labelledby="body-tab">
+                            <div class="mb-3">
+                                <label for="content-type" class="form-label">Content Type</label>
+                                <select class="form-select" id="content-type">
+                                    <option value="application/json">JSON (application/json)</option>
+                                    <option value="application/x-www-form-urlencoded">Form URL Encoded (application/x-www-form-urlencoded)</option>
+                                    <option value="text/plain">Plain Text (text/plain)</option>
+                                    <option value="application/xml">XML (application/xml)</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="request-body" class="form-label">Request Body</label>
+                                <textarea class="form-control" id="request-body" rows="8" placeholder='{"key": "value"}'></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Request History</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="request-history">
+                    <!-- History items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Response Section -->
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Response</h5>
+                <div id="response-meta" class="d-none">
+                    <span class="badge rounded-pill bg-info me-2" id="response-time"></span>
+                    <span class="badge rounded-pill bg-secondary" id="response-size"></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Response status -->
+                <div id="response-status-container" class="mb-3 d-none">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge rounded-pill me-2" id="response-status-badge">200</span>
+                            <span id="response-status-text">OK</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-secondary" id="copy-curl">
+                                <i class="fas fa-copy me-1"></i> Copy as cURL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Response Tabs -->
+                <ul class="nav nav-tabs" id="responseTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="response-body-tab" data-bs-toggle="tab" data-bs-target="#response-body-content" type="button" role="tab" aria-controls="response-body-content" aria-selected="true">Body</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="response-headers-tab" data-bs-toggle="tab" data-bs-target="#response-headers-content" type="button" role="tab" aria-controls="response-headers-content" aria-selected="false">Headers</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content p-3 border border-top-0 rounded-bottom" id="responseTabsContent">
+                    <!-- Response Body Tab -->
+                    <div class="tab-pane fade show active" id="response-body-content" role="tabpanel" aria-labelledby="response-body-tab">
+                        <div id="response-loading" class="text-center d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Sending request...</p>
+                        </div>
+
+                        <div id="response-error" class="alert alert-danger d-none">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <span id="error-message"></span>
+                        </div>
+
+                        <div id="response-body-wrapper" class="response-wrapper d-none">
+                            <pre><code id="response-body" class="language-json"></code></pre>
+                        </div>
+
+                        <div id="response-empty" class="text-center text-muted py-5">
+                            <i class="fas fa-arrow-right fa-3x mb-3"></i>
+                            <p>Send a request to see the response</p>
+                        </div>
+                    </div>
+
+                    <!-- Response Headers Tab -->
+                    <div class="tab-pane fade" id="response-headers-content" role="tabpanel" aria-labelledby="response-headers-tab">
+                        <div id="response-headers-wrapper" class="response-wrapper d-none">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Header</th>
+                                        <th scope="col">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="response-headers">
+                                    <!-- Response headers will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/main.js"></script>
+{% endblock %}
