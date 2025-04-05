@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
     sendButton.addEventListener('click', sendRequest);
     clearButton.addEventListener('click', clearForm);
     addHeaderButton.addEventListener('click', addHeaderRow);
+    const insertTemplateButton = document.getElementById('insert-template');
+    if (insertTemplateButton) {
+        insertTemplateButton.addEventListener('click', insertTradingTemplate);
+    }
     copyCurlButton.addEventListener('click', copyCurl);
 
     // Initial header row
@@ -321,6 +325,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (status < 300) return 'bg-success';
         if (status < 400) return 'bg-warning';
         return 'bg-danger';
+    }
+
+    function insertTradingTemplate() {
+        const template = {
+            "symbol": "XRPUSD",
+            "direction": "sell5",
+            "owner": "DILA",
+            "entryPrice": "1.0",
+            "takeProfit": 0,
+            "stopLoss": 800
+        };
+        requestBody.value = JSON.stringify(template, null, 2);
+        
+        // Ensure content type is set to JSON
+        contentType.value = "application/json";
+        
+        // Switch to the body tab
+        document.getElementById("body-tab").click();
     }
 
     function formatBytes(bytes) {
