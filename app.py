@@ -8,7 +8,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from urllib.parse import urlparse
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Create and configure the app
 app = Flask(__name__, static_folder='static')
@@ -182,7 +182,12 @@ def get_history():
 @app.route('/static/<path:path>')
 def serve_static(path):
     """Serve static files."""
-    return send_from_directory('static', path)
+    logging.debug(f"Requested static file: {path}")
+    try:
+        return send_from_directory('static', path)
+    except Exception as e:
+        logging.error(f"Error serving static file {path}: {str(e)}")
+        return f"Error serving file: {str(e)}", 404
 
 def generate_curl_command(method, url, headers, body, content_type):
     """Generate a curl command from the request data."""
