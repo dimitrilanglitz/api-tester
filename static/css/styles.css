@@ -1,0 +1,91 @@
+/* Custom styles for API Tester */
+
+/* Remove rounded corners on code blocks */
+pre {
+    border-radius: 0.25rem;
+    overflow: auto;
+    max-height: 500px;
+}
+
+/* Response area styling */
+.response-wrapper {
+    max-height: 500px;
+    overflow: auto;
+}
+
+/* Adjustments for the response code blocks */
+#response-body {
+    margin: 0;
+    padding: 0.5rem;
+    box-shadow: none;
+}
+
+/* Status code badge colors are handled by Bootstrap */
+
+/* Ensure consistent header row height in tables */
+.header-row {
+    min-height: 38px;
+}
+
+/* Adjust spacing for mobile devices */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 0.75rem;
+    }
+}
+
+/* Improve tab styling */
+.nav-tabs .nav-link {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+/* Style for empty state */
+#response-empty {
+    color: var(--bs-secondary);
+}
+#response-empty i {
+    opacity: 0.5;
+}
+
+/* Styling for history items */
+.list-group-item.list-group-item-action {
+    border-left: none;
+    border-right: none;
+}
+.list-group-item:first-child {
+    border-top: none;
+}
+
+/* Custom styling for method badges */
+.badge.bg-secondary {
+    font-weight: 500;
+}
+
+/* Make sure navbar is sticky */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Footer styling */
+.footer {
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+/* Ensure consistent form control heights */
+.form-control, .form-select {
+    min-height: 38px;
+}
+
+/* Add a subtle border around the tabs content */
+.tab-content {
+    border-color: var(--bs-border-color);
+}
+
+/* Improve spacing around headers */
+.card-header {
+    padding: 0.75rem 1rem;
+}
