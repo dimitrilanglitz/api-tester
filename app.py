@@ -26,44 +26,6 @@ def index():
     """Render the main API testing interface."""
     return render_template('index.html')
 
-@app.route('/trading', methods=['GET', 'POST'])
-def trading():
-    """Render and handle the trading form."""
-    result = None
-    error = None
-    status_code = None
-    
-    if request.method == 'POST':
-        try:
-            # Get form data
-            trading_data = {
-                "symbol": request.form.get('symbol'),
-                "direction": request.form.get('direction'),
-                "owner": request.form.get('owner'),
-                "entryPrice": request.form.get('entryPrice'),
-                "takeProfit": int(request.form.get('takeProfit')),
-                "stopLoss": int(request.form.get('stopLoss'))
-            }
-            
-            # Send POST request to the webhook
-            response = requests.post(
-                'https://dila-webhook-tv.work', 
-                json=trading_data,
-                headers={'Content-Type': 'application/json'}
-            )
-            
-            # Get response data
-            status_code = response.status_code
-            try:
-                result = response.json()
-            except:
-                result = response.text
-                
-        except Exception as e:
-            error = str(e)
-    
-    return render_template('trading.html', result=result, error=error, status_code=status_code)
-
 @app.route('/send_request', methods=['POST'])
 def send_request():
     """Handle the API request and return the response."""
