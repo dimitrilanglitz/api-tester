@@ -3,7 +3,7 @@ import json
 import logging
 import requests
 import time
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from urllib.parse import urlparse
 
@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 logging.basicConfig(level=logging.DEBUG)
 
 # Create and configure the app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = os.environ.get("SESSION_SECRET", "default_secret_key_for_development")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
@@ -178,6 +178,11 @@ def get_history():
     """Return the request history from the session."""
     history = session.get('request_history', [])
     return jsonify(history)
+
+@app.route('/static/<path:path>')
+def serve_static(path):
+    """Serve static files."""
+    return send_from_directory('static', path)
 
 def generate_curl_command(method, url, headers, body, content_type):
     """Generate a curl command from the request data."""
