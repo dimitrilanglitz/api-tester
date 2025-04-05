@@ -32,10 +32,10 @@
                         <div class="mb-3">
                             <label for="direction" class="form-label">Direction</label>
                             <select class="form-select" id="direction" name="direction" required>
-                                <option value="sell5" selected>sell5</option>
-                                <option value="sell">sell</option>
                                 <option value="buy">buy</option>
-                                <option value="buy5">buy5</option>
+                                <option value="sell" selected>sell</option>
+                                <option value="buyexit">buyexit</option>
+                                <option value="sellexit">sellexit</option>
                             </select>
                         </div>
                         
@@ -110,7 +110,7 @@
                 <div class="card-body">
                     <pre class="bg-dark text-light p-3 rounded"><code id="json-preview">{
   "symbol": "XRPUSD",
-  "direction": "sell5",
+  "direction": "sell",
   "owner": "DILA",
   "entryPrice": "1.0",
   "takeProfit": 0,
