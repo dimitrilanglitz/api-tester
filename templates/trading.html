@@ -18,98 +18,112 @@
 
     <div class="row">
         <div class="col-md-7">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Order Information</h5>
+            <div class="card mb-4 card-collapsible">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#orderCard" aria-expanded="true">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chevron-down collapse-icon me-2"></i>
+                        Order Information
+                    </h5>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="/trading">
-                        <div class="mb-3">
-                            <label for="symbol" class="form-label">Symbol</label>
-                            <input type="text" class="form-control" id="symbol" name="symbol" placeholder="XRPUSD" value="XRPUSD" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="direction" class="form-label">Direction</label>
-                            <select class="form-select" id="direction" name="direction" required>
-                                <option value="buy">buy</option>
-                                <option value="sell">sell</option>
-                                <option value="sell5" selected>sell5</option>
-                                <option value="buyexit">buyexit</option>
-                                <option value="sellexit">sellexit</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="owner" class="form-label">Owner</label>
-                            <input type="text" class="form-control" id="owner" name="owner" placeholder="DILA" value="DILA" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="entryPrice" class="form-label">Entry Price</label>
-                            <input type="text" class="form-control" id="entryPrice" name="entryPrice" placeholder="1.0" value="1.0" required>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="takeProfit" class="form-label">Take Profit</label>
-                                    <input type="number" class="form-control" id="takeProfit" name="takeProfit" placeholder="0" value="0" required>
+                <div class="collapse show" id="orderCard">
+                    <div class="card-body">
+                        <form method="POST" action="/trading">
+                            <div class="mb-3 form-group-mobile">
+                                <label for="symbol" class="form-label">Symbol</label>
+                                <input type="text" class="form-control" id="symbol" name="symbol" placeholder="XRPUSD" value="XRPUSD" required>
+                            </div>
+                            
+                            <div class="mb-3 form-group-mobile">
+                                <label for="direction" class="form-label">Direction</label>
+                                <select class="form-select" id="direction" name="direction" required>
+                                    <option value="buy">buy</option>
+                                    <option value="sell">sell</option>
+                                    <option value="sell5" selected>sell5</option>
+                                    <option value="buyexit">buyexit</option>
+                                    <option value="sellexit">sellexit</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3 form-group-mobile">
+                                <label for="owner" class="form-label">Owner</label>
+                                <input type="text" class="form-control" id="owner" name="owner" placeholder="DILA" value="DILA" required>
+                            </div>
+                            
+                            <div class="mb-3 form-group-mobile">
+                                <label for="entryPrice" class="form-label">Entry Price</label>
+                                <input type="text" class="form-control" id="entryPrice" name="entryPrice" placeholder="1.0" value="1.0" required>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-group-mobile">
+                                        <label for="takeProfit" class="form-label">Take Profit</label>
+                                        <input type="number" class="form-control" id="takeProfit" name="takeProfit" placeholder="0" value="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-group-mobile">
+                                        <label for="stopLoss" class="form-label">Stop Loss</label>
+                                        <input type="number" class="form-control" id="stopLoss" name="stopLoss" placeholder="800" value="800" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="stopLoss" class="form-label">Stop Loss</label>
-                                    <input type="number" class="form-control" id="stopLoss" name="stopLoss" placeholder="800" value="800" required>
-                                </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane me-1"></i> Submit Order
+                                </button>
                             </div>
-                        </div>
-                        
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane me-1"></i> Submit Order
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="col-md-5">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Response</h5>
+            <div class="card mb-4 card-collapsible">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#responseCard" aria-expanded="true">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chevron-down collapse-icon me-2"></i>
+                        Response
+                    </h5>
                 </div>
-                <div class="card-body">
-                    {% if error %}
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        <strong>Error:</strong> {{ error }}
+                <div class="collapse show" id="responseCard">
+                    <div class="card-body">
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Error:</strong> {{ error }}
+                        </div>
+                        {% elif result %}
+                        <div class="alert {% if status_code and status_code < 400 %}alert-success{% else %}alert-warning{% endif %}">
+                            <i class="fas {% if status_code and status_code < 400 %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} me-2"></i>
+                            <strong>Status Code:</strong> {{ status_code }}
+                        </div>
+                        <div class="mt-3">
+                            <h6>Response:</h6>
+                            <pre class="bg-dark text-light p-3 rounded"><code>{{ result }}</code></pre>
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted py-5">
+                            <i class="fas fa-info-circle fa-3x mb-3"></i>
+                            <p>Submit the form to see the response here</p>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% elif result %}
-                    <div class="alert {% if status_code and status_code < 400 %}alert-success{% else %}alert-warning{% endif %}">
-                        <i class="fas {% if status_code and status_code < 400 %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} me-2"></i>
-                        <strong>Status Code:</strong> {{ status_code }}
-                    </div>
-                    <div class="mt-3">
-                        <h6>Response:</h6>
-                        <pre class="bg-dark text-light p-3 rounded"><code>{{ result }}</code></pre>
-                    </div>
-                    {% else %}
-                    <div class="text-center text-muted py-5">
-                        <i class="fas fa-info-circle fa-3x mb-3"></i>
-                        <p>Submit the form to see the response here</p>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
 
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5 class="mb-0">JSON Preview</h5>
+            <div class="card card-collapsible">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#jsonCard" aria-expanded="true">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chevron-down collapse-icon me-2"></i>
+                        JSON Preview
+                    </h5>
                 </div>
-                <div class="card-body">
-                    <pre class="bg-dark text-light p-3 rounded"><code id="json-preview">{
+                <div class="collapse show" id="jsonCard">
+                    <div class="card-body">
+                        <pre class="bg-dark text-light p-3 rounded"><code id="json-preview">{
   "symbol": "XRPUSD",
   "direction": "sell5",
   "owner": "DILA",
@@ -117,6 +131,7 @@
   "takeProfit": 0,
   "stopLoss": 800
 }</code></pre>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,6 +172,14 @@ document.addEventListener('DOMContentLoaded', function() {
     [symbol, direction, owner, entryPrice, takeProfit, stopLoss].forEach(element => {
         element.addEventListener('input', updateJsonPreview);
         element.addEventListener('change', updateJsonPreview);
+    });
+    
+    // Add click event listeners to collapsible headers
+    document.querySelectorAll('.card-collapsible .card-header').forEach(header => {
+        header.addEventListener('click', function() {
+            // Toggle the collapsed state for styling
+            this.classList.toggle('collapsed');
+        });
     });
 });
 </script>

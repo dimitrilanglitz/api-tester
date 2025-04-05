@@ -27,10 +27,85 @@ pre {
     min-height: 38px;
 }
 
+/* Collapsible card sections */
+.card-collapsible .card-header {
+    cursor: pointer;
+    user-select: none;
+}
+
+.card-collapsible .card-header:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.card-collapsible .collapse-icon {
+    transition: transform 0.3s ease;
+}
+
+.card-collapsible .card-header.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+}
+
 /* Adjust spacing for mobile devices */
 @media (max-width: 768px) {
     .card-body {
         padding: 0.75rem;
+    }
+    
+    /* Stack buttons on mobile */
+    .mobile-stack {
+        flex-direction: column;
+    }
+    
+    .mobile-stack .btn {
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+    
+    /* Allow text to wrap on mobile */
+    .mobile-wrap {
+        white-space: normal;
+        word-break: break-word;
+    }
+    
+    /* Ensure table columns don't overflow on mobile */
+    .table-responsive-mobile {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    
+    /* Improve mobile form layout */
+    .form-group-mobile {
+        margin-bottom: 1rem;
+    }
+    
+    /* Smaller padding for mobile */
+    .container-fluid {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* Adjust modal padding for mobile */
+    .modal-body {
+        padding: 0.75rem;
+    }
+    
+    /* Improve navbar on mobile */
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile-first approach for tablets */
+@media (min-width: 769px) and (max-width: 992px) {
+    /* Specific adjustments for tablets */
+    .tablet-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .tablet-row > [class*="col-"] {
+        margin-bottom: 1rem;
     }
 }
 
@@ -88,4 +163,41 @@ pre {
 /* Improve spacing around headers */
 .card-header {
     padding: 0.75rem 1rem;
+}
+
+/* Animation for collapsible elements */
+.collapsible-content {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+}
+
+/* Improved card styling */
+.card {
+    margin-bottom: 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Better form layout */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Button improvements */
+.btn {
+    border-radius: 0.25rem;
+    font-weight: 500;
+}
+
+/* Improved focus states */
+.form-control:focus, .form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Toast/notification styling */
+.toast {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1080;
 }
