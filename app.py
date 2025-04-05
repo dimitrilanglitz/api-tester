@@ -41,12 +41,9 @@ def trading():
                 "direction": request.form.get('direction'),
                 "owner": request.form.get('owner'),
                 "entryPrice": request.form.get('entryPrice'),
-                "takeProfit": int(request.form.get('takeProfit', 0)),
-                "stopLoss": int(request.form.get('stopLoss', 800))
+                "takeProfit": int(request.form.get('takeProfit')),
+                "stopLoss": int(request.form.get('stopLoss'))
             }
-            
-            # Log the request data
-            logging.debug(f"Sending trading data: {trading_data}")
             
             # Send POST request to the webhook
             response = requests.post(
@@ -57,18 +54,13 @@ def trading():
             
             # Get response data
             status_code = response.status_code
-            logging.debug(f"Response status code: {status_code}")
-            
             try:
                 result = response.json()
-                logging.debug(f"Response JSON: {result}")
             except:
                 result = response.text
-                logging.debug(f"Response text: {result}")
                 
         except Exception as e:
             error = str(e)
-            logging.error(f"Error processing trading request: {error}")
     
     return render_template('trading.html', result=result, error=error, status_code=status_code)
 
